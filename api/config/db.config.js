@@ -23,7 +23,7 @@
 module.exports = {
     HOST: "localhost",
     USER: "root",
-    PASSWORD: "password",
+    PASSWORD: "root",
     DB: "instantmesseging",
     dialect: "mysql",
     pool: {

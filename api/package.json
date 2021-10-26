@@ -17,5 +17,8 @@
     "mysql2": "^2.3.2",
     "nodemon": "^2.0.14",
     "sequelize": "^6.8.0"
+  },
+  "devDependencies": {
+    "sqlite3": "^5.0.2"
   }
 }

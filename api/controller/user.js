@@ -23,6 +23,7 @@ module.exports.register = function (req, res) {
     const Username = req.body.Username;
     const Name = req.body.Name || null;
     const Password = bcrypt.hashSync(req.body.Password, bcrypt.genSaltSync(10));
+    const email = req.body.email;
     User.findAll({where: {Username:Username} })
     .then(data =>{
         console.log("User data", data.length)
@@ -36,7 +37,7 @@ module.exports.register = function (req, res) {
         });
       });
     console.log("Registering user");
-    User.create({ Username: Username, Name: Name, Password: Password})
+    User.create({ Username: Username, Name: Name, Password: Password, email: email})
       .then(data => {
         res.send(data);
       })
