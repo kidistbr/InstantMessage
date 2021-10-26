@@ -24,7 +24,7 @@
         }
         try {
             console.log(user)
-            await axios.post('http://localhost:3000/api/users/register', user)
+            await axios.post('http://localhost:3001/api/users/register', user)
             history.push("/login")
             ;
         } catch (err) {

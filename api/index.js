@@ -1,3 +1,4 @@
+
 const express = require('express');
 const dbConfig = require("./config/db.config");
 const db = require("./model");
@@ -19,7 +20,7 @@ const Sequelize = require('sequelize');
 //   });
 
 //const routes = 
-app.set("port", 3000);
+app.set("port", 3001);
 
 const connection = mysql.createConnection({
   host     : 'localhost',
@@ -50,5 +51,13 @@ const server = app.listen(app.get("port"), function(){
 })
 app.use(express.urlencoded({extended : false}));
 app.use(express.json({extended : false}));
+
+app.use("/api", function(req,res,next){
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With,Content-Type,Accept");
+  res.header("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT");
+  next();
+});
 app.use('/api', routes);
+
 
