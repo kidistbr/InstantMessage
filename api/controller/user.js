@@ -61,7 +61,7 @@ module.exports.login = function (req, res) {
             if (bcrypt.compareSync(Password, user[0].dataValues.Password)) {
                 const token = jwt.sign({ username: user.username }, "im", { expiresIn: 3600 });
                 console.log("token",token);
-                res.status(200).json({ success: true, token: token });
+                res.status(200).json({ success: true, token: token, username:Username });
                 return;
             } 
             else { 
