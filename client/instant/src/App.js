@@ -45,6 +45,7 @@ import Home from "./pages/home/Home";
 function App() {
   const { user } = useContext(AuthContext);
   console.log("user", user);
+  console.log("user", user);
 
   return (
     // <Register></Register>
@@ -52,7 +53,6 @@ function App() {
       <Switch>
         <Route exact path="/">
           {user ? <Home /> : <Register />}
-           <Register />
 
         </Route>
         <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>

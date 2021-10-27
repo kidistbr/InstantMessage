@@ -4,11 +4,14 @@ import "./login.css";
 import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@material-ui/core";
+import { useHistory } from "react-router";
+
 
 export default function Login() {
   const Username = useRef();
   const Password = useRef();
-  const { isFetching, dispatch } = useContext(AuthContext);
+  const { isFetching,error, dispatch } = useContext(AuthContext);
+  const history = useHistory();
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -18,24 +21,22 @@ export default function Login() {
     );
   };
 
+  const handleRegistrationClick = ()=>{
+    history.push('/register')
+  }
+
   return (
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">Lamasocial</h3>
+          <h3 className="loginLogo">Instant Message App</h3>
           <span className="loginDesc">
-            Connect with friends and the world around you on Lamasocial.
+            Connect with friends using Instant Message App.
           </span>
         </div>
         <div className="loginRight">
           <form className="loginBox" onSubmit={handleClick}>
-            {/* <input
-              placeholder="Email"
-              type="email"
-              required
-              className="loginInput"
-              ref={email}
-            /> */}
+      
                         <input
               placeholder="Username"
               type="Username"
@@ -58,15 +59,18 @@ export default function Login() {
                 "Log In"
               )}
             </button>
-            <span className="loginForgot">Forgot Password?</span>
-            <button className="loginRegisterButton">
+
+          </form>
+          <form  className="loginBox" onSubmit={handleRegistrationClick}>
+
+          <button className="loginRegisterButton">
               {isFetching ? (
                 <CircularProgress color="white" size="20px" />
               ) : (
                 "Create a New Account"
               )}
             </button>
-          </form>
+            </form>
         </div>
       </div>
     </div>

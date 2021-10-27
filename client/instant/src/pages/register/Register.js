@@ -33,6 +33,9 @@
         
         }
     }
+    const handleLoginToAccount= ()=>{
+        history.push("/login");
+    }
 
     return (
         <div className="login">
@@ -83,8 +86,12 @@
                 <button className="loginButton" type="submit">
                 Sign Up
                 </button>
-                <button className="loginRegisterButton">Log into Account</button>
             </form>
+            <form className="loginBox" onSubmit={handleLoginToAccount}>
+
+            <button className="loginRegisterButton">Log into Account</button>
+
+        </form>
             </div>
         </div>
         </div>
