@@ -23,10 +23,10 @@ const Sequelize = require('sequelize');
 app.set("port", 3001);
 
 const connection = mysql.createConnection({
-  host     : 'localhost',
-  user     : 'root',
-  password : 'root',
-  database : 'instantmesseging'
+  host     : dbConfig.HOST,
+  user     : dbConfig.USER,
+  password : dbConfig.PASSWORD,
+  database : dbConfig.DB
 });
 
 connection.connect(function(err) {

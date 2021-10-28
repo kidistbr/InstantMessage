@@ -8,15 +8,15 @@ import { useHistory } from "react-router";
 
 
 export default function Login() {
-  const Username = useRef();
-  const Password = useRef();
+  const email = useRef();
+  const password = useRef();
   const { isFetching,error, dispatch } = useContext(AuthContext);
   const history = useHistory();
 
   const handleClick = (e) => {
     e.preventDefault();
     loginCall(
-      { Username: Username.current.value, Password: Password.current.value },
+      { email: email.current.value, password: password.current.value },
       dispatch
     );
   };
@@ -38,19 +38,19 @@ export default function Login() {
           <form className="loginBox" onSubmit={handleClick}>
       
                         <input
-              placeholder="Username"
-              type="Username"
+              placeholder="email"
+              type="email"
               required
               className="loginInput"
-              ref={Username}
+              ref={email}
             />
             <input
-              placeholder="Password"
-              type="Password"
+              placeholder="password"
+              type="password"
               required
               minLength="6"
               className="loginInput"
-              ref={Password}
+              ref={password}
             />
             <button className="loginButton" type="submit" disabled={isFetching}>
               {isFetching ? (

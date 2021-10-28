@@ -36,6 +36,7 @@ import {
 import { useContext } from "react";
 import Login from "./pages/login/Login";
 import Home from "./pages/home/Home";
+import {initialize} from "../src/utils/talk.session"
 
 
 
@@ -44,8 +45,13 @@ import Home from "./pages/home/Home";
 
 function App() {
   const { user } = useContext(AuthContext);
-  console.log("user", user);
-  console.log("user", user);
+  // if (user) {
+  //   initialize({...user,
+  //   email:"kidyber@gmail.com",
+  //   role:"Employee",
+  //   description:"abv"});
+  // }
+  // console.log("@@@@@@@",user);
 
   return (
     // <Register></Register>

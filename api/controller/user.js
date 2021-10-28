@@ -20,15 +20,16 @@ module.exports.getAllUsers = function(req, res){
 }
 
 module.exports.register = function (req, res) {
-    const Username = req.body.Username;
-    const Name = req.body.Name || null;
-    const Password = bcrypt.hashSync(req.body.Password, bcrypt.genSaltSync(10));
+    // const username = req.body.username;
+    const firstName = req.body.firstName || null;
+    const lastName = req.body.lastName || null;
+    const password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
     const email = req.body.email;
-    User.findAll({where: {Username:Username} })
+    User.findAll({where: {email:email} })
     .then(data =>{
         console.log("User data", data.length)
         if(data && data.length>0)
-            res.status(403).json({message:"User Name already exists, please choose a new one"});
+            res.status(403).json({message:"User Already Exists, Please Login."});
     })
     .catch(err => {
         res.status(500).send({
@@ -37,7 +38,7 @@ module.exports.register = function (req, res) {
         });
       });
     console.log("Registering user");
-    User.create({ Username: Username, Name: Name, Password: Password, email: email})
+    User.create({firstName: firstName, lastName:lastName, password: password, email: email})
       .then(data => {
         res.send(data);
       })
@@ -51,17 +52,21 @@ module.exports.register = function (req, res) {
 
 module.exports.login = function (req, res) {
     console.log("Logging in user");
-    const Username = req.body.Username;
-    const Password = req.body.Password;
+    const email = req.body.email;
+    const password = req.body.password;
     console.log(req.body);
-    User.findAll({where: {Username:Username} })
+    User.findAll({where: {email:email} })
     .then(user =>{
         if(user.length>0){
             console.log("user found", user);
-            if (bcrypt.compareSync(Password, user[0].dataValues.Password)) {
-                const token = jwt.sign({ username: user.username }, "im", { expiresIn: 3600 });
+            if (bcrypt.compareSync(password, user[0].dataValues.password)) {
+              console.log("lastName"+user.lastName);
+              console.log("firstName"+user.firstName);
+                const token = jwt.sign({ 
+                  id: user[0].dataValues.userId,
+                  name: user[0].dataValues.firstName+" "+user[0].dataValues.lastName }, "im", { expiresIn: 3600 });
                 console.log("token",token);
-                res.status(200).json({ success: true, token: token, username:Username });
+                res.status(200).json({ success: true, token: token });
                 return;
             } 
             else { 
