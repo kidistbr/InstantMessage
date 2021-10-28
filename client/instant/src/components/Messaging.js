@@ -44,8 +44,12 @@ class Messaging extends Component {
         if (!window.talkSession) {
           window.talkSession = new Talk.Session({
             appId: 't8WOumdG',
-            me: me,
-          })
+            
+            
+            //sending message as this user 
+            me: me
+          
+        })
         }
         const user2 = {
           name: 'thomas',
