@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import Talk from 'talkjs'
+import { AuthContext } from "../context/AuthContext";
+import { useContext } from "react";
 
 
 class Messaging extends Component {
@@ -31,6 +33,8 @@ class Messaging extends Component {
   componentDidMount() {
     Talk.ready
       .then(() => {
+        // const { loginUser } = useContext(AuthContext);
+        // console.log(loginUser)
         const user = {
           name: 'kidist',
           email: 'kidist@matchMedia.com',
