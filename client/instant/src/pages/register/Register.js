@@ -31,7 +31,7 @@
             history.push("/login")
             ;
         } catch (err) {
-            console.log(err)
+            console.log("err", err)
         }
         
         }

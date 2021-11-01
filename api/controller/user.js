@@ -32,8 +32,35 @@ module.exports.register = function (req, res) {
     User.findAll({where: {email:email} })
     .then(data =>{
         console.log("User data", data.length)
-        if(data && data.length>0)
-            return res.status(403).json({message:"User Already Exists, Please Login."});
+        if(data && data.length>0){
+          return res.status(403).json({message:"User Already Exists, Please Login."});
+        }
+        else{
+          Organization.findAll({where:{emailDomain:emailDomain}})
+          .then(organizationData =>{
+            console.log("organizationData",organizationData);
+            if(organizationData.length!=0){
+              console.log("Inside if");
+              const organizationId = organizationData[0].dataValues.organizationId;
+              console.log("organization id", organizationId);
+      
+              User.create({firstName: firstName, lastName:lastName, password: password, email: email, organizationId: organizationId})
+              .then(data => {
+                return res.send(data);
+              })
+              .catch(err => {
+                console.log("Catch block #3")
+                return res.status(500).send({
+                  message:
+                    err.message || "Some error occurred while creating the User."
+                });
+              });
+            }else{
+              console.log("inside else");
+              return res.status(403).json({message:"Invalid Email, please register with your organization email."});
+            }
+          })
+        }
     })
     .catch(err => {
       console.log("Catch block #2")
@@ -43,42 +70,6 @@ module.exports.register = function (req, res) {
             err.message || "Some error occurred."
         });
       });
-    console.log("Registering user");
-
-
-    Organization.findAll({where:{emailDomain:emailDomain}})
-    .then(organizationData =>{
-      console.log("organizationData",organizationData);
-      if(organizationData.length!=0){
-        console.log("Inside if");
-        const organizationId = organizationData[0].dataValues.organizationId;
-        console.log("organization id", organizationId);
-
-        User.create({firstName: firstName, lastName:lastName, password: password, email: email, organizationId: organizationId})
-        .then(data => {
-          return res.send(data);
-        })
-        .catch(err => {
-          console.log("Catch block #3")
-          return res.status(500).send({
-            message:
-              err.message || "Some error occurred while creating the User."
-          });
-        });
-      }else{
-        console.log("inside else");
-        return res.status(403).json({message:"Invalid Email, please register with your organization email."});
-      }
-    })
-    .catch(err => {
-      console.log("Catch block #1")
-
-      return res.status(500).send({
-        message:
-          err.message || "Some error occurred."
-      });
-      
-    });
 
 };
 
