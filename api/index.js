@@ -2,8 +2,7 @@
 const express = require('express');
 const dbConfig = require("./config/db.config");
 const db = require("./model");
-db.sequelize.sync({ force: true }).then(() => {
-    console.log("Drop and re-sync db.");
+db.sequelize.sync().then(() => {
   });
 
 const app = express();
