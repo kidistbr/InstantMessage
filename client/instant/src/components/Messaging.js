@@ -1,55 +1,36 @@
+import "./messaging.css";
 import React, { Component, Fragment } from 'react'
 import Talk from 'talkjs'
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 
 
-class Messaging extends Component {
+class MessagingImpl extends Component {
   constructor(props) {
     super(props)
-    // this.talkjsContainer=React.createRef();
 
     this.inbox = undefined
-    let currentUser
-
-    // const currentUser = {
-    //     name:"kidist",
-    //     email: "kidist@matchMedia.com",
-    //     description: "abc",
-    //     id: 1,
-    //     role: "Member",
-    //     photoUrl: "https://talkjs.com/docs/img/ronald.jpg"
-    // }
-    // const currentTalkjsUser = localStorage.getItem('currentTalkjsUser');
-    // if (currentTalkjsUser) {
-    //     currentUser = JSON.parse(currentTalkjsUser)
-    // }
-
-    this.state = {
-      currentUser,
-    }
   }
 
   componentDidMount() {
+    const currentUser=this.props.user;
+    console.log("Voila", currentUser);
+    const context = this.context;
+    this.setState({currentUser: context.user});
     Talk.ready
       .then(() => {
-        // const { loginUser } = useContext(AuthContext);
-        // console.log(loginUser)
         const user = {
           name: 'kidist',
           email: 'kidist@matchMedia.com',
           description: 'abc',
           id: 1,
           role: 'Member',
-          // photoUrl: "https://talkjs.com/docs/img/ronald.jpg"
         }
-        const me = new Talk.User(user)
+      const me = new Talk.User({...currentUser, role:"Employee"})
 
         if (!window.talkSession) {
           window.talkSession = new Talk.Session({
-            appId: 't8WOumdG',
-            
-            
+            appId: 'tyHyJByi',
             //sending message as this user 
             me: me
           
@@ -96,15 +77,11 @@ class Messaging extends Component {
   }
 
   render() {
-    // return( 
-    //     <div ref={this.talkjsContainer}></div>
-    // )
-
     return (
       <Fragment>
         <div
-          style={{ height: '500px' }}
-          className="inbox-container"
+        
+          className="messenger"
           ref={(c) => (this.container = c)}
         >
           Loading...
@@ -114,4 +91,12 @@ class Messaging extends Component {
   }
 }
 
-export default Messaging
+export default function Messaging() {
+  const { user } = useContext(AuthContext);
+  console.log("VOILA", user);
+  return (<div>
+  <MessagingImpl user={user}></MessagingImpl>
+  </div>
+  )
+};
+

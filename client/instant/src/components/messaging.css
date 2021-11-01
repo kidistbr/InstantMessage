@@ -1,0 +1,9 @@
+.messenger {
+    height: calc(100vh - 70px);
+    /* display: flex; */
+    margin-top: 0.5%;
+     width: 100%;
+    /* position: right;  */
+    
+    
+  }

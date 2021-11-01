@@ -1,6 +1,6 @@
 import "./navbar.css";
 import { Link } from "react-router-dom";
-
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 export default function NavBar(){
 
@@ -16,13 +16,14 @@ export default function NavBar(){
 
         </div>
         <div className="topbarRight">
-        <div className="searchbar">
-            {/* <Search className="searchIcon" /> */}
-            <input
-              placeholder="Search for friend"
-              className="searchInput"
-            />
-          </div>
+        <Link to={`/profile/`}>
+          {/* <img
+            src={ "./noAvatar.png"}
+            alt=""
+            className="topbarImg"
+          /> */}
+        <AccountCircleIcon/>
+        </Link>
 
 
 

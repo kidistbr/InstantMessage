@@ -16,7 +16,7 @@
         dispatch({ type: "LOGIN_SUCCESS", payload:user});
 
         console.log("res.data"+res.data.token);
-        // initialize(user)
+        initialize(user)
         // talkSession.initialize(user);
         // talkSession.initialize(user);
     } catch (err) {

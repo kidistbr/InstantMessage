@@ -39,18 +39,15 @@ import Home from "./pages/home/Home";
 import {initialize} from "../src/utils/talk.session"
 
 
-
-
-
-
 function App() {
   const { user } = useContext(AuthContext);
-  // if (user) {
-  //   initialize({...user,
-  //   email:"kidyber@gmail.com",
-  //   role:"Employee",
-  //   description:"abv"});
-  // }
+  console.log("@@@@@@@",user);
+
+  if (user) {
+    initialize(user);
+  }
+
+
   // console.log("@@@@@@@",user);
 
   return (

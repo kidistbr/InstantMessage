@@ -49,11 +49,11 @@
   }
   
   .topbarRight {
-    flex: 4;
-    display: flex;
-    align-items: center;
+    display: absolute;
+    align-items: right;
     justify-content: space-around;
     color: white;
+    margin-right: 12px;
   }
   
   .topbarLink {
@@ -93,6 +93,7 @@
     border-radius: 50%;
     object-fit: cover;
     cursor: pointer;
+    float: right;
   }
   
   @media screen and (max-width: 768px)  {
