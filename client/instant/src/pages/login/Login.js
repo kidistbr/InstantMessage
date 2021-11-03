@@ -1,10 +1,12 @@
 
-import { useContext, useRef } from "react";
+import { useContext, useRef, useState, useEffect } from "react";
 import "./login.css";
 import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
 import { CircularProgress } from "@material-ui/core";
 import { useHistory } from "react-router";
+import { useLocation } from "react-router-dom";
+import Alert from '@mui/material/Alert';
 
 
 export default function Login() {
@@ -12,6 +14,18 @@ export default function Login() {
   const password = useRef();
   const { isFetching,error, dispatch } = useContext(AuthContext);
   const history = useHistory();
+  const location = useLocation();
+
+  useEffect(() => {
+    console.log(location.pathname); // result: '/secondpage'
+    console.log(location.state); // result: 'some_value'
+ }, [location]);
+
+  // const { responseMsg, setResponseMsg } = useState(response);
+
+  // useEffect(() => {
+  //   setResponseMsg(response.messag);
+  // }, [response]);
 
   const handleClick = (e) => {
     e.preventDefault();
@@ -35,6 +49,11 @@ export default function Login() {
           </span>
         </div>
         <div className="loginRight">
+          {location.state?
+          <Alert severity="info">{location.state.response}</Alert>
+            :
+            <div></div>
+        }
           <form className="loginBox" onSubmit={handleClick}>
       
                         <input

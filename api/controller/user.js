@@ -2,22 +2,45 @@ const db = require("../model")
 const bcrypt=require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const Op = require('Sequelize').Op
 
 const User =db.Users;
 const Organization = db.Organization;
 
 module.exports.getAllUsers = function(req, res){
+    const name = req.query.name;
+    if(name){
+      console.log(name);
+      User.findAll({
+        where: {
+          [Op.or]: [{firstName: {
+            [Op.like]: '%' + name+ '%'
+        }}, 
+          {lastName: {
+            [Op.like]: '%' + name + '%'
+        }}]
+        }
+      })
+      .then(data => {
+        res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send(
+            err.message || "Some error occurred while retrieving Users."
+        );
+      });
+    }else{
     console.log("Inside user controller");
     User.findAll({})
     .then(data => {
       res.send(data);
     })
     .catch(err => {
-      res.status(500).send({
-        message:
+      res.status(500).send(
           err.message || "Some error occurred while retrieving Users."
-      });
+      );
     });
+  }
 }
 
 module.exports.register = function (req, res) {
@@ -33,7 +56,7 @@ module.exports.register = function (req, res) {
     .then(data =>{
         console.log("User data", data.length)
         if(data && data.length>0){
-          return res.status(403).json({message:"User Already Exists, Please Login."});
+          return res.status(400).send("User Already Exists, Please Login.");
         }
         else{
           Organization.findAll({where:{emailDomain:emailDomain}})
@@ -46,18 +69,17 @@ module.exports.register = function (req, res) {
       
               User.create({firstName: firstName, lastName:lastName, password: password, email: email, organizationId: organizationId})
               .then(data => {
-                return res.send(data);
+                return res.status(200).send(data);
               })
               .catch(err => {
                 console.log("Catch block #3")
-                return res.status(500).send({
-                  message:
-                    err.message || "Some error occurred while creating the User."
-                });
+                console.log(err)
+                return res.status(500).send(
+                    err.message );
               });
             }else{
               console.log("inside else");
-              return res.status(403).json({message:"Invalid Email, please register with your organization email."});
+              return res.status(403).json("Invalid Email, please register with your organization email.");
             }
           })
         }
@@ -65,10 +87,9 @@ module.exports.register = function (req, res) {
     .catch(err => {
       console.log("Catch block #2")
 
-        return res.status(500).send({
-          message:
+        return res.status(500).send(
             err.message || "Some error occurred."
-        });
+        );
       });
 
 };
@@ -105,10 +126,9 @@ module.exports.login = function (req, res) {
     .catch(err => {
         console.log("Catch block", err);
 
-        res.status(500).send({
-          message:
+        res.status(500).send(
             err.message || "Some error occurred."
-        });
+        );
       });
 };
 

@@ -1,7 +1,7 @@
      import axios from "axios";
     //  import * as talkSession from '../src/utils/talk.session';
      import {initialize} from "../src/utils/talk.session"
-    
+
     export const loginCall = async (userCredential, dispatch) => {
     dispatch({ type: "LOGIN_START" });
     try {
@@ -21,5 +21,14 @@
         // talkSession.initialize(user);
     } catch (err) {
         dispatch({ type: "LOGIN_FAILURE", payload: err });
+    }
+    };
+
+export const searchUserCall= async (name) => {
+    try {
+        const res = await axios.get("http://localhost:3001/api/users?name="+name);
+        return res.data;
+    } catch (err) {
+        return err;
     }
     };

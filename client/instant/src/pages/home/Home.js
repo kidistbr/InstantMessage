@@ -8,11 +8,13 @@ import Sidebar from "../sidebar/sidebar";
 import '../sidebar/sidebar.css'
 import Grid from '@material-ui/core/Grid'
 import Paper from '@material-ui/core/Paper'
+import { useLocation } from "react-router";
 
 export default function Home() {
 
   const { user } = useContext(AuthContext);
-
+  let query = new URLSearchParams(useLocation().search);
+  console.log("query, query", query);
   return (
     <Grid container style={{width: '100%', margin: '0 auto'}}>
       <Grid item xs={12}>
@@ -22,7 +24,8 @@ export default function Home() {
         <div style={{height: 100, margin: 0}}><Sidebar/></div>
       </Grid>
       <Grid item xs={8}>
-        <div style={{height: 100}}><Messaging/></div>
+        <div style={{height: 100}}>
+          <Messaging userId={query.get("userId")} userName={query.get("userName")}/></div>
       </Grid>
     </Grid>//     <div>
 //       <NavBar/>

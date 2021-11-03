@@ -8,24 +8,22 @@ import { useContext } from "react";
 class MessagingImpl extends Component {
   constructor(props) {
     super(props)
-
-    this.inbox = undefined
+    // this.currentUser= undefined;
+    this.chatWith = this.props.chatWith;    
+    this.inbox = undefined;
+    this.chatBox = undefined;
   }
 
   componentDidMount() {
     const currentUser=this.props.user;
+    // const chatWith= this.props.chatWith;
+    console.log("chat with", this.chatWith);
     console.log("Voila", currentUser);
     const context = this.context;
     this.setState({currentUser: context.user});
+    this.setState({chatWith: context.chatWith});
     Talk.ready
       .then(() => {
-        const user = {
-          name: 'kidist',
-          email: 'kidist@matchMedia.com',
-          description: 'abc',
-          id: 1,
-          role: 'Member',
-        }
       const me = new Talk.User({...currentUser, role:"Employee"})
 
         if (!window.talkSession) {
@@ -36,44 +34,67 @@ class MessagingImpl extends Component {
           
         })
         }
-        const user2 = {
-          name: 'thomas',
-          email: 'email@gmail.com',
-          description: 'xyz',
-          id: 2,
-          role: 'Member',
-          // photoUrl: "https://talkjs.com/docs/img/ronald.jpg"
-        }
-        const me2 = new Talk.User(user2)
-        const user3 = {
-            name: 'scott',
-            email: 'email@gmail.com',
-            description: 'xyz',
-            id: 3,
-            role: 'Member',
-            // photoUrl: "https://talkjs.com/docs/img/ronald.jpg"
-          }
-          const me3 = new Talk.User(user3)
-        
-        //first convo
-          var conversation = window.talkSession.getOrCreateConversation(
-          Talk.oneOnOneId(me, me2),
-        )
-        //make it a group convo 
-        conversation.setParticipant(me)
-        conversation.setParticipant(me2)
-        conversation.setParticipant(me3) 
-        
-        //second convo
+
+        if(this.chatWith.userId){
+          const second ={
+            id:Number(this.chatWith.userId),
+            name: this.chatWith.userName
+          };
+          const secondUser = new Talk.User(second)
         var conversation2 = window.talkSession.getOrCreateConversation(
-            Talk.oneOnOneId(me, me3),
+            Talk.oneOnOneId(me, secondUser),
           )
           conversation2.setParticipant(me)
-          conversation2.setParticipant(me3)
+          conversation2.setParticipant(secondUser)
+
         this.inbox = window.talkSession.createInbox({selected:conversation2})
+        }
+        else{
+          this.inbox = window.talkSession.createInbox({})
+        }
         this.inbox.mount(this.container)
       })
       .catch((e) => console.error(e))
+  }
+  componentDidUpdate(){
+    console.log("update", this.props.chatWith);
+    console.log("update user", this.props.user);
+    Talk.ready
+    .then(() => {
+    const me = new Talk.User({...this.props.user, role:"Employee"})
+
+      if (!window.talkSession) {
+        window.talkSession = new Talk.Session({
+          appId: 'tyHyJByi',
+          //sending message as this user 
+          me: this.props.user
+        
+      })
+      }
+
+      if(this.props.chatWith.userId){
+        console.log("inside if")
+        const second ={
+          id:Number(this.props.chatWith.userId),
+          name: this.props.chatWith.userName
+        };
+        const secondUser = new Talk.User(second)
+      var conversation2 = window.talkSession.getOrCreateConversation(
+          Talk.oneOnOneId(me, secondUser),
+        )
+        conversation2.setParticipant(me)
+        conversation2.setParticipant(secondUser)
+
+      this.inbox = window.talkSession.createInbox({selected:conversation2})
+      this.inbox.mount(this.container)
+         }
+      else{
+        console.log("else")
+        this.chatbox =window.talkSession.createChatbox();
+      }
+ 
+    })
+    .catch((e) => console.error(e))
   }
 
   render() {
@@ -91,11 +112,17 @@ class MessagingImpl extends Component {
   }
 }
 
-export default function Messaging() {
+
+export default function Messaging(chatWith) {
+  // console.log(userId, userName,"@@@@@@@");
+  // const chatWith = {
+  //   userId:userId,
+  //   userName: userName
+  // }
   const { user } = useContext(AuthContext);
-  console.log("VOILA", user);
+  // console.log("VOILA", user);
   return (<div>
-  <MessagingImpl user={user}></MessagingImpl>
+  <MessagingImpl user={user} chatWith={chatWith}></MessagingImpl>
   </div>
   )
 };

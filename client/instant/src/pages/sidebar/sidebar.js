@@ -1,18 +1,45 @@
 
 import "./sidebar.css";
-import React from 'react'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchBar from "material-ui-search-bar";
 import {Work, Group, AddCircle} from '@mui/icons-material/';
+import { searchUserCall } from "../../apiCalls";
+import axios from "axios";
+import SearchResult from "./searchResult";
+
 // import Work from "@mui/icons-material/Work";
 // import GroupIcon from '@mui/icons-material/Group';
-
 export default function Sidebar() {
-
+  const [users, setUsers]= useState();
+  const [isSearched, setIsSearched] = useState(false);
   const [search, setSearch] = useState();
-  const doSomethingWith=(searchFor)=>{
+  
+
+  // useEffect(() => {
+  //   const getFriends = async () => {
+  //     try {
+  //       const friendList = await axios.get("http://localhost:3001/api/users?name" + search);
+  //       setUsers(friendList.data);
+  //       setIsSearched(true);
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getFriends();
+  // }, [search]);
+  const doSomethingWith=async(searchFor)=>{
       console.log("@@@@@", searchFor);
+     const users =  await searchUserCall(searchFor);
+        setUsers(users);
+       setSearch(searchFor);
+       setIsSearched(true);
+      console.log("user at searcg", users)
   }
+
+  // const doSomethingWith = useCallback(async(searchFor)=>{
+  //   const users= await searchUserCall(searchFor);
+  //   setUsers(users);
+  // });
 
   return (
     <div className="sidebar">
@@ -29,6 +56,18 @@ export default function Sidebar() {
         <p>Communicate With Your Peers</p>
     </div>
     <hr/>
+    {isSearched?
+    <div>
+    <div>
+      <ul>
+        {users.map(u => (
+          <SearchResult key={u.id} user={u} />
+        ))} 
+       </ul>
+    </div>
+    <hr/>
+    </div>
+    :<div></div>}
     <div>
       <div className="title">
         <Group/> <h2>Group Chats</h2>

@@ -2,6 +2,8 @@
     import { useRef } from 'react'
     import './register.css'
     import { useHistory } from "react-router";
+    import Alert from '@mui/material/Alert';
+    import { useState } from "react";
 
     export default function Register() {
     // const Username = useRef()
@@ -11,6 +13,7 @@
     const firstName = useRef()
     const lastName = useRef()
     const history = useHistory();
+    const [responseMsg, setResponseMsg] = useState();
 
     const handleClick = async (e) => {
         e.preventDefault()
@@ -27,11 +30,19 @@
         }
         try {
             console.log(user)
-            await axios.post('http://localhost:3001/api/users/register', user)
-            history.push("/login")
-            ;
+            const response = await axios.post('http://localhost:3001/api/users/register', user)
+            console.log(response) 
+            setResponseMsg(response.data.message)        
+            history.push({
+                pathname:  "/login",
+                state: {
+                  response: "Successfully Registered. Please Log in." 
+                } 
+             });
         } catch (err) {
-            console.log("err", err)
+            setResponseMsg(err.response.data);
+            console.log("err", err);
+
         }
         
         }
@@ -50,6 +61,10 @@
             </span>
             </div>
             <div className="loginRight">
+            {responseMsg?
+            <Alert severity="warning">{responseMsg}</Alert>:
+            <div></div>
+            }
             <form className="loginBox" onSubmit={handleClick}>
 
                 <input
