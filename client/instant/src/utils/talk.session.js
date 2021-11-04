@@ -1,6 +1,5 @@
 import Talk from 'talkjs';
 import { Deferred } from "../utils/deferred.util";
-import { User } from '../models/user.model';
 import { appId, createTalkUser } from './talk.util';
 
 const sessionDeferred = new Deferred();

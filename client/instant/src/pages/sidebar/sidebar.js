@@ -1,10 +1,9 @@
 
 import "./sidebar.css";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import SearchBar from "material-ui-search-bar";
 import {Work, Group, AddCircle} from '@mui/icons-material/';
 import { searchUserCall } from "../../apiCalls";
-import axios from "axios";
 import SearchResult from "./searchResult";
 
 // import Work from "@mui/icons-material/Work";

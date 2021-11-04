@@ -37,7 +37,6 @@ import { useContext } from "react";
 import Login from "./pages/login/Login";
 import Home from "./pages/home/Home";
 import {initialize} from "../src/utils/talk.session"
-import Messaging from "./components/Messaging";
 
 
 function App() {

@@ -1,5 +1,4 @@
 import Talk from 'talkjs';
-import { User } from '../models/user.model';
 
 // Change this to your actual AppId which can be
 // found in the TalkJS dashboard.

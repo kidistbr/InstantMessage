@@ -1,5 +1,5 @@
 
-import { useContext, useRef, useState, useEffect } from "react";
+import { useContext, useRef, useEffect } from "react";
 import "./login.css";
 import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
@@ -12,7 +12,7 @@ import Alert from '@mui/material/Alert';
 export default function Login() {
   const email = useRef();
   const password = useRef();
-  const { isFetching,error, dispatch } = useContext(AuthContext);
+  const { isFetching, dispatch } = useContext(AuthContext);
   const history = useHistory();
   const location = useLocation();
 

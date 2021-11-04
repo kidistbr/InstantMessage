@@ -1,18 +1,14 @@
 
 import "./home.css"
 import NavBar from "../../components/NavBar";
-import { AuthContext } from "../../context/AuthContext";
-import { useContext } from "react";
 import Messaging from "../../components/Messaging";
 import Sidebar from "../sidebar/sidebar";
 import '../sidebar/sidebar.css'
 import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
 import { useLocation } from "react-router";
 
 export default function Home() {
 
-  const { user } = useContext(AuthContext);
   let query = new URLSearchParams(useLocation().search);
   console.log("query, query", query);
   return (
