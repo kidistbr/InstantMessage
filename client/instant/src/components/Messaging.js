@@ -4,6 +4,7 @@ import Talk from 'talkjs'
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 import { create } from "@mui/material/styles/createTransitions";
+var crypto = require('crypto')
 
 
 class MessagingImpl extends Component {
@@ -25,9 +26,58 @@ class MessagingImpl extends Component {
 
     console.log("this.chatWith.userId update", this.props.chatWith)
     if(this.props.chatWith.userId){
-      console.log("Inside update if");
-      this.createChat();
+      const chatWithList = this.props.chatWith.userId.split(',')
+      if (chatWithList.length() === 1) {
+        console.log("Inside update if");
+        this.createChat();
+      }
+      else {
+        this.createGroupChat();
+      }
 
+    }
+  }
+
+  generateConversationId(userIds) {
+    var sorted = [...userIds].sort();
+    console.log(sorted);
+    var encoded = JSON.stringify(sorted);
+    
+    var shasum = crypto.createHash('sha1')
+    shasum.update(encoded)
+    var hash = shasum.digest('hex')
+    console.log(hash.substring(0, 20));
+    return hash.substring(0, 20);
+  }
+
+  selectConversation(event) {
+    var others = event.others;
+    var userIds = others.map(function (user) {
+      return user.id;
+    })
+    var userIdsString = userIds.join(',')
+    var userNames = others.map(function (user) {
+      return user.name;
+    })
+    var userNamesString = userNames.join(',')
+    window.history.pushState({},"",`/messaging?userId=${userIdsString}&userName=${userNamesString}`);
+  }
+
+  async deleteConversation(event) {
+    var conversation = event.conversation;
+    var conversationId = conversation.id;
+    var message = event.message;
+    var text = message.text;
+
+    if (text === "/delete") {
+      var uri = `https://api.talkjs.com/v1/t8WOumdG/conversations/${conversationId}`;
+      const response = await fetch(uri, {
+        method: 'DELETE',
+        headers: {
+          'Content-type': 'application/json',
+          'Authorization': 'Bearer sk_test_zrbzmp4G3L0afJbK3GUgRDr4dbOLVyBG'
+        }
+      });
     }
   }
 
@@ -38,35 +88,58 @@ class MessagingImpl extends Component {
 
       if (!window.talkSession) {
         window.talkSession = new Talk.Session({
-          appId: 'tyHyJByi',
+          appId: 't8WOumdG',
           //sending message as this user 
           me: me
-        
-      })
+        })
       }
       console.log(this.chatWith);
       if(this.props.chatWith.userId){
-        const second ={
-          id:Number(this.props.chatWith.userId),
-          name: this.props.chatWith.userName
-        };
-        const secondUser = new Talk.User(second)
-      var conversation2 = window.talkSession.getOrCreateConversation(
-          Talk.oneOnOneId(me, secondUser),
-        )
-        conversation2.setParticipant(me)
-        conversation2.setParticipant(secondUser)
-      this.inbox = window.talkSession.createInbox({selected:conversation2})
-      this.inbox.mount(this.container);
+        const userIdList = this.props.chatWith.userId.split(',');
+        var conversation2;
+        if (userIdList.length === 1) {
+          const second ={
+            id:Number(this.props.chatWith.userId),
+            name: this.props.chatWith.userName
+          };
+          const secondUser = new Talk.User(second)
+          console.log(Talk.oneOnOneId(me, secondUser));
+          conversation2 = window.talkSession.getOrCreateConversation(
+            Talk.oneOnOneId(me, secondUser),
+          )
+          conversation2.setParticipant(me)
+          conversation2.setParticipant(secondUser)
+        }
+        else {
+          const userNameList = this.props.chatWith.userName.split(',');
+          conversation2 = window.talkSession.getOrCreateConversation(
+            this.generateConversationId(userIdList),
+          )
+          conversation2.setParticipant(me)
+          
+          for (let index = 0; index < userIdList.length; ++index) {
+            var element = userIdList[index];
+            const other = {
+              id: Number(element),
+              name: userNameList[index]
+            };
+            const otherUser = new Talk.User(other);
+            conversation2.setParticipant(otherUser);
+          }
+        }
+        this.inbox = window.talkSession.createInbox({selected:conversation2})
       }
       else{
         console.log("Inside Else");
         this.chatBox= window.talkSession.createChatbox();
         console.log("chatbox", this.chatBox);
         this.inbox = window.talkSession.createInbox();
-        this.inbox.mount(this.container);
+        
 
       }
+      this.inbox.mount(this.container);
+      this.inbox.on("selectConversation", this.selectConversation);
+      this.inbox.on("sendMessage", this.deleteConversation);
     })
     .catch((e) => console.error(e))
   }

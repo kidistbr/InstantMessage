@@ -67,19 +67,19 @@ export default function Sidebar() {
     <hr/>
     </div>
     :<div></div>}
-    <div>
+    {/* <div>
       <div className="title">
         <Group/> <h2>Group Chats</h2>
-        </div>
-        <hr/>
-        <div className="link"><AddCircle/><h3>New Channel</h3></div>
-        <ul>
+      </div>
+      <hr/>
+      <div className="link"><AddCircle/><h3>New Channel</h3></div>
+      <ul>
           <li className="link"><h3>Group One</h3></li>
           <li className="link"><h3>Group Two</h3></li>
           <li className="link"><h3>Group Three</h3></li>
           <li className="link"><h3>Group Four</h3></li>
-        </ul>
-    </div>
+      </ul>
+    </div> */}
     <hr/>
   
     </div>
