@@ -3,7 +3,6 @@ import React, { Component, Fragment } from 'react'
 import Talk from 'talkjs'
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
-import { create } from "@mui/material/styles/createTransitions";
 var crypto = require('crypto')
 
 
@@ -27,12 +26,13 @@ class MessagingImpl extends Component {
     console.log("this.chatWith.userId update", this.props.chatWith)
     if(this.props.chatWith.userId){
       const chatWithList = this.props.chatWith.userId.split(',')
-      if (chatWithList.length() === 1) {
+      console.log(chatWithList);
+      if (chatWithList.length === 1) {
         console.log("Inside update if");
         this.createChat();
       }
       else {
-        this.createGroupChat();
+        this.createChat();
       }
 
     }
@@ -70,12 +70,12 @@ class MessagingImpl extends Component {
     var text = message.text;
 
     if (text === "/delete") {
-      var uri = `https://api.talkjs.com/v1/t8WOumdG/conversations/${conversationId}`;
+      var uri = `https://api.talkjs.com/v1/tyHyJByi/conversations/${conversationId}`;
       const response = await fetch(uri, {
         method: 'DELETE',
         headers: {
           'Content-type': 'application/json',
-          'Authorization': 'Bearer sk_test_zrbzmp4G3L0afJbK3GUgRDr4dbOLVyBG'
+          'Authorization': 'Bearer sk_test_jqgP9ezEZAcfrDMEIWBm7pJNbI45LwQk'
         }
       });
     }
@@ -88,7 +88,7 @@ class MessagingImpl extends Component {
 
       if (!window.talkSession) {
         window.talkSession = new Talk.Session({
-          appId: 't8WOumdG',
+          appId: 'tyHyJByi',
           //sending message as this user 
           me: me
         })

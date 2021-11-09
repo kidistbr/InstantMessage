@@ -32,3 +32,16 @@
   .title > .MuiSvgIcon-root {
     padding: 20px;
   }
+
+  .button{
+    width: 30%;
+    align-self: center;
+    height: 20px;
+    border-radius: 10px;
+    border: none;
+    background-color: #42b72a;
+    color: white;
+    font-size: 10px;
+    font-weight: 300;
+    cursor: pointer;
+}

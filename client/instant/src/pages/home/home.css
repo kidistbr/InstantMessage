@@ -4,6 +4,9 @@
     margin-top: 10px;
   }
 /* The side navigation menu */
+.test{
+  background-color: #1877f2;
+}
 .sidebar {
     padding: 0;
     width: 200px;

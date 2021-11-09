@@ -37,7 +37,14 @@ export default function SearchResult({key,user}) {
         // </Link>
 
         // <Link to={`/messaging?userId=${user.userId}&userName=${name}`}>
-        <li className="link" key={key}>{name}<button onClick={(theUser) => openChat(user)}>Begin New Chat</button> <button onClick={(theUser) => printTest2(user)}>Add to Chat</button> </li>
+        <li className="link" key={key}>{name}
+         <Link to={`/messaging?userId=${user.userId}&userName=${name}`}>
+
+        <button>Begin New Chat</button> 
+        </Link>
+        <button onClick={(theUser) => printTest2(user)}>Add to Chat</button> 
+        
+        </li>
         // </Link>
     );
   }

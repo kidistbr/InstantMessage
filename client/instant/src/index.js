@@ -4,13 +4,14 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthContextProvider } from "./context/AuthContext" 
+import { StyledEngineProvider } from '@mui/material/styles';
 
 ReactDOM.render(
-  <React.StrictMode>
+  <StyledEngineProvider injectFirst>
     <AuthContextProvider>
     <App />
     </AuthContextProvider>
-  </React.StrictMode>,
+</StyledEngineProvider>,
   document.getElementById('root')
 );
 
