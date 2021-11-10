@@ -17,8 +17,9 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-
-
+import { AuthContext } from "../../context/AuthContext";
+import { useContext } from "react";
+import AccountMenu from "../AccountMenu";
 const drawerWidth = 240;
 
 
@@ -72,6 +73,22 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 export default function Home() {
 
+  const { user } = useContext(AuthContext);
+  const name = user.name.split(" ");
+  const initials = name[0].split("")[0]+name[1].split("")[0];
+  console.log("User from home", initials);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  // const menuOpen = Boolean(anchorEl);
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
+
+  // const handleClick = (event) => {
+  // }
   let query = new URLSearchParams(useLocation().search);
 
   const theme = useTheme();
@@ -84,6 +101,7 @@ const handleDrawerOpen = () => {
 const handleDrawerClose = () => {
   setOpen(false);
 };
+
 
   return (
     // <Grid container style={{width: '100%', margin: '0 auto'}}>
@@ -98,26 +116,27 @@ const handleDrawerClose = () => {
     //       <Messaging userId={query.get("userId")} userName={query.get("userName")}/></div>
     //   </Grid>
     // </Grid>
+    <React.Fragment>
+
     <Box sx={{ display: 'flex' }}>
     <CssBaseline />
-    <div className="test">
-    <AppBar position="fixed" open={open}>
-      <Toolbar>
+    <AppBar position="fixed" style={{backgroundColor: "#1877f2"}} open={open}>
+      <Toolbar sx={{ display: 'flex' }}>
         <IconButton
-          color="inherit"
+          // color="inherit"
           aria-label="open drawer"
           onClick={handleDrawerOpen}
           edge="start"
           sx={{ mr: 2, ...(open && { display: 'none' }) }}
         >
-          <MenuIcon />
+          <MenuIcon  style= {{color:"#f0f2f5"}} />
         </IconButton>
-        <Typography variant="h6" noWrap component="div">
+        <Typography style= {{color:"#f0f2f5"}} variant="h6" noWrap component="div">
            Instant Messaging
           </Typography>
+          <AccountMenu/>
         </Toolbar>
     </AppBar>
-    </div>
     <Drawer
         sx={{
           width: drawerWidth,
@@ -131,8 +150,8 @@ const handleDrawerClose = () => {
         anchor="left"
         open={open}
       >
-     <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
+     <DrawerHeader style={{backgroundColor: "#1877f2", color:"#f0f2f5"}}>
+          <IconButton style={{color:"#f0f2f5"}} onClick={handleDrawerClose}>
             {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
           </IconButton>
         </DrawerHeader>
@@ -147,5 +166,8 @@ const handleDrawerClose = () => {
         </Main>
 
         </Box>
+
+      </React.Fragment>
+
   );
 }
