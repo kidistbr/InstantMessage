@@ -20,7 +20,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import AccountMenu from "../AccountMenu";
-import image from './../../walpaper.webp'
+import image from './../../wallpaper3.jpg'
 
 const drawerWidth = 240;
 
@@ -160,7 +160,13 @@ const handleDrawerClose = () => {
         <Divider />
         <Sidebar/>
         </Drawer>
-        <Main open={open}>
+        <Main open={open}
+                  style={{
+                    backgroundImage: 'url('+image+')',
+                    backgroundSize: "cover",
+                    height: "100vh",
+                    color: "#f5f5f5"
+                  }}>
         <DrawerHeader />
         {/* <Typography paragraph>
         </Typography> */}

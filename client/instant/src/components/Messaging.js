@@ -152,12 +152,6 @@ class MessagingImpl extends Component {
         <div
         
           className="messenger"
-          style={{
-            backgroundImage: 'url('+image+')',
-            backgroundSize: "cover",
-            height: "100vh",
-            color: "#f5f5f5"
-          }}
           ref={(c) => (this.container = c)}
         >
           Loading...
