@@ -3,6 +3,8 @@ import React, { Component, Fragment } from 'react'
 import Talk from 'talkjs'
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
+import image from '../wallpaper3.jpg'
+
 var crypto = require('crypto')
 
 
@@ -150,6 +152,12 @@ class MessagingImpl extends Component {
         <div
         
           className="messenger"
+          style={{
+            backgroundImage: 'url('+image+')',
+            backgroundSize: "cover",
+            height: "100vh",
+            color: "#f5f5f5"
+          }}
           ref={(c) => (this.container = c)}
         >
           Loading...

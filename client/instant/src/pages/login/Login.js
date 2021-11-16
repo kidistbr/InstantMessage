@@ -7,6 +7,8 @@ import { CircularProgress } from "@material-ui/core";
 import { useHistory } from "react-router";
 import { useLocation } from "react-router-dom";
 import Alert from '@mui/material/Alert';
+import logo from './../../logo.png'
+import image from './../../walpaper.webp'
 
 
 export default function Login() {
@@ -40,15 +42,24 @@ export default function Login() {
   }
 
   return (
-    <div className="login">
+    <div className="login"
+    style={{
+      backgroundImage: 'url('+image+')',
+      backgroundSize: "cover",
+      height: "100vh",
+      color: "#f5f5f5"
+    }} 
+    >
       <div className="loginWrapper">
         <div className="loginLeft">
-          <h3 className="loginLogo">Instant Message App</h3>
+          <h3 className="loginLogo">CreoChat</h3>
           <span className="loginDesc">
-            Connect with friends using Instant Message App.
+            Connect with your team mates.
           </span>
         </div>
         <div className="loginRight">
+        <img src={logo}  className="App-logo" alt="logo" />
+
           {location.state?
           <Alert severity="info">{location.state.response}</Alert>
             :

@@ -4,6 +4,8 @@
     import { useHistory } from "react-router";
     import Alert from '@mui/material/Alert';
     import { useState } from "react";
+    import logo from './../../logo.png'
+    import image from './../../walpaper.webp'
 
     export default function Register() {
     // const Username = useRef()
@@ -52,15 +54,24 @@
     }
 
     return (
-        <div className="login">
+        
+        <div className="login"
+        style={{
+            backgroundImage: 'url('+image+')',
+            backgroundSize: "cover",
+            height: "100vh",
+            color: "#f5f5f5"
+          }}>
         <div className="loginWrapper">
             <div className="loginLeft">
-            <h3 className="loginLogo">Instant Message App</h3>
+            <h3 className="loginLogo">CreoChat</h3>
             <span className="loginDesc">
-                Connect with people using the Instant Message App.
+                Connect with your team mates.
             </span>
             </div>
             <div className="loginRight">
+            <img src={logo}  className="App-logo" alt="logo" />
+
             {responseMsg?
             <Alert severity="warning">{responseMsg}</Alert>:
             <div></div>

@@ -90,3 +90,10 @@
     font-weight: 500;
     cursor: pointer;
 }
+
+.App-logo {
+  width: 100%;
+  height: 10%;
+  object-fit: contain;
+  padding: 7px;
+}
