@@ -142,6 +142,8 @@ class MessagingImpl extends Component {
       this.inbox.mount(this.container);
       this.inbox.on("selectConversation", this.selectConversation);
       this.inbox.on("sendMessage", this.deleteConversation);
+      this.inbox.setPresence("visible: true");
+      
     })
     .catch((e) => console.error(e))
   }
