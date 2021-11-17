@@ -7,4 +7,5 @@ router.route("/users")
 router.route("/users/register")
         .post(userController.register);
 router.route("/users/login").post(userController.login);
+router.route("/users/online").get(userController.onlineUser);
 module.exports = router;

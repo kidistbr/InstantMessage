@@ -45,3 +45,41 @@
     font-weight: 300;
     cursor: pointer;
 }
+.chatOnlineBadge {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: limegreen;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}
+
+.chatOnlineImgContainer {
+  position: relative;
+  margin-right: 10px;
+}
+
+.chatOnlineImg {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid white;
+}
+.chatOnlineFriend {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.chatOfflineBadge{
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: gray;
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}

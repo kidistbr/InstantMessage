@@ -80,6 +80,8 @@ class MessagingImpl extends Component {
           'Authorization': 'Bearer sk_test_jqgP9ezEZAcfrDMEIWBm7pJNbI45LwQk'
         }
       });
+      console.log("delete response", response)
+
     }
   }
 

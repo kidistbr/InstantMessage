@@ -20,7 +20,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
 import AccountMenu from "../AccountMenu";
-import image from './../../wallpaper3.jpg'
+import image from './../../group.png'
 
 const drawerWidth = 240;
 

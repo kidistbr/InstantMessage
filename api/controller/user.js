@@ -3,6 +3,7 @@ const bcrypt=require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const Op = require('Sequelize').Op
+const axios = require('axios');
 
 const User =db.Users;
 const Organization = db.Organization;
@@ -146,3 +147,22 @@ module.exports.authenticate = function (req, res, next) {
         });
     } else { res.status(403).json("No token provided"); }
 };
+
+module.exports.onlineUser = function(req, res, next){
+  const userId = req.query.userId;
+
+const url =`https://api.talkjs.com/v1/tyHyJByi/users/${userId}/sessions`;
+axios({
+  method:'get',
+  url,
+  headers: {
+    'Authorization': 'Bearer sk_test_jqgP9ezEZAcfrDMEIWBm7pJNbI45LwQk'
+  }
+})
+.then(function (response) {
+  res.send(JSON.stringify(response.data));
+})
+.catch(function (error) {
+  console.log(error);
+});
+}
