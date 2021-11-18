@@ -1,7 +1,11 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
+
 module.exports = {
-    HOST: "localhost",
-    USER: "root",
-    PASSWORD: "password",
+    HOST: process.env.HOST,
+    USER: process.env.USER_NAME,
+    PASSWORD:process.env.PASSWORD,
     DB: "instantmesseging",
     dialect: "mysql",
     pool: {

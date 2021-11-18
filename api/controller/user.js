@@ -8,6 +8,9 @@ const axios = require('axios');
 const User =db.Users;
 const Organization = db.Organization;
 
+const dotenv = require("dotenv");
+dotenv.config();
+
 module.exports.getAllUsers = function(req, res){
     const name = req.query.name;
     if(name){
@@ -104,12 +107,14 @@ module.exports.login = function (req, res) {
     .then(user =>{
         if(user.length>0){
             console.log("user found", user);
+            console.log("process.env", process.env.JWTKEY);
+
             if (bcrypt.compareSync(password, user[0].dataValues.password)) {
               console.log("lastName"+user.lastName);
               console.log("firstName"+user.firstName);
                 const token = jwt.sign({ 
                   id: user[0].dataValues.userId,
-                  name: user[0].dataValues.firstName+" "+user[0].dataValues.lastName }, "im", { expiresIn: 3600 });
+                  name: user[0].dataValues.firstName+" "+user[0].dataValues.lastName }, process.env.JWTKEY, { expiresIn: 3600 });
                 console.log("token",token);
                 res.status(200).json({ success: true, token: token });
                 return;
@@ -137,7 +142,7 @@ module.exports.authenticate = function (req, res, next) {
     var headerExists = req.headers.authorization;
     if (headerExists) {
         var token = req.headers.authorization.split(" ")[1];
-        jwt.verify(token, "im", function (err, decoded) {
+        jwt.verify(token, process.env.JWTKEY, function (err, decoded) {
             if (err) {
                 console.log(err); res.status(401).json("Unauthorized");
             } else {

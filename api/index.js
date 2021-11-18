@@ -29,6 +29,10 @@ const connection = mysql.createConnection({
 });
 
 connection.connect(function(err) {
+  console.log('db',dbConfig.HOST);
+  console.log('db',dbConfig.PASSWORD);
+  console.log('db',dbConfig.USER);
+
     if (err) {
       console.error('error connecting: ' + err.stack);
       return;
