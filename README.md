@@ -2,6 +2,16 @@
 
 Creochat is an instant messaging application for communication between employees.
 
+  ## Table of Contents
+  
+  [Installation](#installation)  
+  
+  [Running](#running)
+  
+  [Contributors](#contributors)  
+  
+  [License](#license)    
+
 ## Installation
 
 To install node packages [npm install] from the api folder for the backend and instant folder for the front end.
@@ -18,7 +28,7 @@ To start the applications run [npm start] from the api folder for the backend an
 npm start
 ```
 
-## Contributers 
+## Contributors 
 Thomas Dunlap
 Kidist Tibebu
 
