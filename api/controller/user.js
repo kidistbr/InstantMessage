@@ -48,13 +48,11 @@ module.exports.getAllUsers = function(req, res){
 }
 
 module.exports.register = function (req, res) {
-    // const username = req.body.username;
     const firstName = req.body.firstName || null;
     const lastName = req.body.lastName || null;
     const password = bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10));
     const email = req.body.email;
     const emailDomain = email.split('@')[1];
-    // let organizationId="";
     console.log("emailDomain", emailDomain);
     User.findAll({where: {email:email} })
     .then(data =>{

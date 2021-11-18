@@ -3,7 +3,7 @@ import React, { Component, Fragment } from 'react'
 import Talk from 'talkjs'
 import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
-import image from '../wallpaper3.jpg'
+
 
 var crypto = require('crypto')
 

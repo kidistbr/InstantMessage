@@ -13,12 +13,6 @@ const routes = require('./routes');
 
 const Sequelize = require('sequelize');
 
-// const sequelize = new Sequelize('instantmesseging', 'root', 'password', {
-//     host: 'localhost',
-//     dialect:  'mysql' 
-//   });
-
-//const routes = 
 app.set("port", 3001);
 
 const connection = mysql.createConnection({

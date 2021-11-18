@@ -22,6 +22,16 @@ npm install
 
 ## Running
 
+Create a .env file inside api to include: 
+
+```bash
+host= Your host here
+USER_NAME= Your username here
+PASSWORD= Your password here
+DB= Your database here
+JWTKEY= your JWT Key here
+```
+
 To start the applications run [npm start] from the api folder for the backend and instant folder for the front end.
 
 ```bash
